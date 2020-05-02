@@ -1,0 +1,11 @@
+.DS_Store
+.idea
+.vscode
+.env
+src
+docs
+example
+node_modules
+tsconfig.json
+.editorconfig
+webpack.config.js

@@ -1,0 +1,27 @@
+{
+	"name": "react-soa",
+	"version": "1.0.0",
+	"description": "Service oriented programming pattern for building frontend applications.",
+	"main": "dist/index.js",
+	"types": "dist/index.d.ts",
+	"scripts": {
+		"ship": "rm -rf ./dist && tsc && npm publish",
+		"build": "rm -rf ./dist && tsc"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+ssh://git@github.com/react-soa/react-soa.git"
+	},
+	"author": "Aryan Alikhani",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/react-soa/react-soa/issues"
+	},
+	"homepage": "https://github.com/react-soa/react-soa#readme",
+	"dependencies": {
+		"react": "^16.13.1"
+	},
+	"devDependencies": {
+		"typescript": "^3.8.3"
+	}
+}
