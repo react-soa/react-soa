@@ -1,6 +1,6 @@
 {
 	"name": "react-soa",
-	"version": "1.0.1",
+	"version": "1.0.3",
 	"description": "Service oriented programming pattern for building frontend applications.",
 	"main": "dist/index.js",
 	"types": "dist/index.d.ts",
@@ -18,7 +18,7 @@
 		"url": "https://github.com/react-soa/react-soa/issues"
 	},
 	"homepage": "https://github.com/react-soa/react-soa#readme",
-	"peerDependencies": {
+	"dependencies": {
 		"react": "^16.13.1"
 	},
 	"devDependencies": {
