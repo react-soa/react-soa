@@ -1,6 +1,6 @@
 {
 	"name": "react-soa",
-	"version": "1.0.3",
+	"version": "2.0.0",
 	"description": "Service oriented programming pattern for building frontend applications.",
 	"main": "dist/index.js",
 	"types": "dist/index.d.ts",
@@ -22,6 +22,7 @@
 		"react": "^16.13.1"
 	},
 	"devDependencies": {
-		"typescript": "^3.8.3"
+		"@types/react": "^16.9.43",
+		"typescript": "^3.9.7"
 	}
 }

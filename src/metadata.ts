@@ -1,4 +1,6 @@
-import {DebounceOptions, EventBus, ThrottleOptions} from "./tools";
+import {ThrottleOptions} from "./throttle";
+import {DebounceOptions} from "./debounce";
+import {EventBus} from "./event-bus";
 
 export const config = {
 	counter: 0,
@@ -9,10 +11,14 @@ export type TimerOptions = { stopped: boolean; name: string; count: number; sing
 export type Metadata = Partial<{
 	id: number;
 	order: number;
-	observables: { key: string }[];
-	wired: { key: string }[];
-	debounceFunctions: {key: string, ms: number; options?: Partial<DebounceOptions>}[];
-	throttleFunctions: {key: string, ms: number; options?: Partial<ThrottleOptions>}[];
+	name: string;
+	hub: boolean;
+	observers: { [key: number]: string };
+	triggers: { [key: string]: string[] };
+	observables: string[];
+	wired: string[];
+	debounceFunctions: { key: string, ms: number; options?: Partial<DebounceOptions> }[];
+	throttleFunctions: { key: string, ms: number; options?: Partial<ThrottleOptions> }[];
 	timers: { key: string; ms: number, options?: Partial<TimerOptions> }[];
 	channel: EventBus;
 	[key: string]: any;
