@@ -1,5 +1,5 @@
 import './debug.scss';
-import React, {Component, Fragment} from "react";
+import {h, Component, Fragment} from "preact";
 import {metadataOf} from "./metadata";
 
 export class Debug extends Component {

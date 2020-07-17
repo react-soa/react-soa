@@ -1,4 +1,4 @@
-import {useContext, useEffect, useState} from "react";
+import {useContext, useEffect, useState} from "preact/hooks";
 import {SoaContext, Store} from "./provider";
 import {metadataOf} from "./metadata";
 

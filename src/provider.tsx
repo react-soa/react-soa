@@ -1,4 +1,4 @@
-import {createContext} from "react";
+import {createContext} from "preact";
 import {EventBus} from "./event-bus";
 
 export type Store = {

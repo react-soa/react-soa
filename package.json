@@ -1,5 +1,5 @@
 {
-	"name": "react-soa",
+	"name": "preact-soa",
 	"version": "2.0.0",
 	"description": "Service oriented programming pattern for building frontend applications.",
 	"main": "dist/index.js",
@@ -19,10 +19,9 @@
 	},
 	"homepage": "https://github.com/react-soa/react-soa#readme",
 	"dependencies": {
-		"react": "^16.13.1"
+		"preact": "^10.4.6"
 	},
 	"devDependencies": {
-		"@types/react": "^16.9.43",
 		"typescript": "^3.9.7"
 	}
 }

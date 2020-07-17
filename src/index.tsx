@@ -4,7 +4,7 @@ import {invoke, invokeAll} from "./invoke";
 import {throttle} from "./throttle";
 import {debounce} from "./debounce";
 import {EventBus} from "./event-bus";
-import React from "react";
+import {h} from "preact";
 
 export function Service(target: any) {
 	const id = config.counter++;
