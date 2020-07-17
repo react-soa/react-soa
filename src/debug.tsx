@@ -1,4 +1,3 @@
-import './debug.scss';
 import React, {Component, Fragment} from "react";
 import {metadataOf} from "./metadata";
 
