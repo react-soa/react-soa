@@ -121,7 +121,6 @@ export class Debug extends Component {
 	}
 
 	componentWillUnmount(): void {
-		this.unsub();
 		window.removeEventListener('mousedown', this.mouseDown);
 		window.removeEventListener('mouseup', this.mouseUp);
 		window.removeEventListener('touchstart', this.mouseDown);
@@ -207,16 +206,16 @@ export class Debug extends Component {
 										const variable = descriptors[key];
 										if (!variable.enumerable)
 											return null;
-										const {observables} = metadataOf(service);
+										const {observables, wired} = metadataOf(service);
+										if (wired && wired.indexOf(key) > -1)
+											return null;
 										const val = service[key];
 										const typ = typeof val;
-										const obs = observables.indexOf(key) > -1;
+										const obs = observables && observables.indexOf(key) > -1;
 										const show = JSON.stringify(val, null, '  ') + ';';
 										let fnq = '';
 										if (typ === 'function') {
-											fnq = val.toString().substr(8).trim();
-											const nx = fnq.indexOf(')') + 1;
-											fnq = fnq.substr(0, nx) + ';';
+											fnq = val.toString();
 										}
 										return <div key={i} className={`list-item ${obs ? 'obj-observable' : ''}`} onClick={() => {
 											const value = service[key];
@@ -236,17 +235,26 @@ export class Debug extends Component {
 												return;
 											}
 										}}>
-											<span className="type-def">{typ}</span>
-											<span>{key}</span>
-											{typ !== 'function' ? <span>&nbsp;{'='}&nbsp;{show}</span> : <span>{fnq}</span>}
+											{typ !== 'function' ? (
+												<Fragment>
+													<span className="type-def">{typ}</span>
+													<span>{key}</span>&nbsp;
+													<span>{'='}&nbsp;{show}</span>
+												</Fragment>
+											) : (
+												<Fragment>
+													<span className="type-def">{key}</span>
+													<span>{'='}&nbsp;{fnq}</span>
+												</Fragment>
+											)}
 										</div>
 									})}
 								</div>
 							) : null
 						) : (
 							<div className="debug--console">
-								{logs.map(log => {
-									return <div className="log-item">
+								{logs.map((log, i) => {
+									return <div key={i} className="log-item">
 										{log.args.map(arg => <pre>{arg}</pre>)}
 									</div>
 								})}
