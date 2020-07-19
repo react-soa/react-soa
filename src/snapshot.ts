@@ -34,10 +34,9 @@ export function getServiceSnapshot<T>(service: { new(container?: Store): T }): a
 }
 
 export function restoreSnapshot(context: Store, d: any) {
-	if (!d) return false;
-	return context.services.some((service) => {
+	context.services.forEach((service) => {
 		const {id} = metadataOf(service);
-		return restoreServiceSnapshot(service, d[id]);
+		restoreServiceSnapshot(service, d[id]);
 	});
 }
 
@@ -45,13 +44,11 @@ export function restoreServiceSnapshot<T>(service: { new(container?: Store): T }
 	const {persisted = []} = metadataOf(service);
 	if (persisted.length > 0) {
 		if (!!data) {
-			return persisted.some((meta) => {
+			persisted.forEach((meta) => {
 				const {key} = meta;
 				if (typeof data[key] !== 'undefined') {
 					service[key] = data[key];
-					return true;
 				}
-				return false;
 			});
 		}
 	}
