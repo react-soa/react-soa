@@ -46,7 +46,7 @@ export function Observer(types: { new(container?: Store): any }[]) {
 								const key = id + variable;
 								if (this.beforeSync && this.beforeSync.call(this, service, variable, value) === false) return;
 								this.setState(state => {
-									const {__updater} = state;
+									const __updater = state ? state.__updater : undefined;
 									if (typeof __updater === 'undefined') {
 										return {
 											__updater: {
