@@ -5,6 +5,7 @@ export type Store = {
 	updates: EventBus;
 	channel: EventBus;
 	services?: any[];
+	context: any;
 	pick<T>(target: { new(container?: Store): T }): T;
 	broadcast(...args: any[]);
 	invoke(target: any, name: string, ...args: any[]): Promise<any>;

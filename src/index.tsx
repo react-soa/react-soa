@@ -57,8 +57,9 @@ export function pick<T>(target: { new(container?: Store): T }, base?: any): T {
 	}
 }
 
-export function createStore(): Store {
+export function createStore(context?: any): Store {
 	const container: Store = {} as Store;
+	container.context = context;
 	container.updates = new EventBus();
 	container.channel = new EventBus();
 	container.services = config.services.map(cls => Object.create(cls.prototype));
