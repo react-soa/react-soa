@@ -1,9 +1,19 @@
-import {metadataOf} from "./metadata";
+import {metadata, metadataOf} from "./metadata";
 import {Store} from "./provider";
 
 type Options = {
 	type?: string;
 	validate?: (options: { metadata: any, key: string }) => any;
+}
+
+export function persisted(target: any, key: string) {
+	const {persisted = []} = metadataOf(target);
+	metadata(target, {
+		persisted: [
+			...persisted,
+			{key}
+		]
+	});
 }
 
 
