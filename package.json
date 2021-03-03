@@ -1,6 +1,6 @@
 {
 	"name": "react-soa",
-	"version": "2.1.6",
+	"version": "2.1.7",
 	"description": "Service oriented programming pattern for building frontend applications.",
 	"main": "dist/index.js",
 	"types": "dist/index.d.ts",

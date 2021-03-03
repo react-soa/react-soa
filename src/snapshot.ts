@@ -1,66 +1,73 @@
-import {metadata, metadataOf} from "./metadata";
+import {metadataOf} from "./metadata";
 import {Store} from "./provider";
-import {optional} from "./optional";
 
-export function persisted(target: any, key: string) {
-	const {persisted = []} = metadataOf(target);
-	metadata(target, {
-		persisted: [
-			...persisted,
-			{key}
-		]
-	});
+type Options = {
+	type?: string;
+	validate?: (options: { metadata: any, key: string }) => any;
 }
 
-export function getSnapshot(context: Store) {
+
+export function getSnapshot(context: Store, options?: Options) {
 	return context.services.reduce((acc, service) => {
 		const {id} = metadataOf(service);
-		const obj = getServiceSnapshot(service);
+		const obj = getServiceSnapshot(service, options);
 		if (obj) acc[id] = obj;
 		return acc;
 	}, {} as any);
 }
 
-export function getServiceSnapshot<T>(service: { new(container?: Store): T }): any {
-	const {persisted = []} = metadataOf(service);
-	if (persisted.length > 0) {
+export function getServiceSnapshot<T>(service: { new(container?: Store): T }, options?: Options): any {
+	const opt = options || {
+		type: 'persisted',
+		validate: null,
+	};
+	const type = opt.type || 'persisted';
+	const validate = opt.validate;
+
+	const meta = metadataOf(service);
+	const keys = meta[type] || [];
+	if (keys.length > 0) {
 		const obj = {};
-		persisted.forEach((meta) => {
-			const {key} = meta;
+		keys.forEach(m => {
+			const {key} = m;
+			if (validate && !validate({metadata: meta, key}))
+				return;
 			obj[key] = service[key];
 		});
 		return obj;
 	}
 }
 
-export function restoreSnapshot(context: Store, d: any) {
+export function restoreSnapshot(context: Store, data: any, options?: Options) {
 	context.services.forEach((service) => {
 		const {id} = metadataOf(service);
-		restoreServiceSnapshot(service, d[id]);
+		restoreServiceSnapshot(service, data[id], options);
 	});
 }
 
-export function restoreServiceSnapshot<T>(service: { new(container?: Store): T }, data: any) {
-	const {persisted = []} = metadataOf(service);
-	if (persisted.length > 0) {
+export function restoreServiceSnapshot<T>(service: { new(container?: Store): T }, data: any, options?: Options) {
+	const opt = options || {
+		type: 'persisted',
+		validate: null,
+	};
+	const type = opt.type || 'persisted';
+	const validate = opt.validate;
+
+
+	const meta = metadataOf(service);
+	const keys = meta[type] || [];
+	if (keys.length > 0) {
 		if (!!data) {
-			persisted.forEach((meta) => {
-				const {key} = meta;
+			keys.forEach(m => {
+				const {key} = m;
 				if (typeof data[key] !== 'undefined') {
+					console.log(data[key]);
+					if (validate && !validate({metadata: meta, key}))
+						return;
 					service[key] = data[key];
 				}
 			});
 		}
 	}
 	return false;
-}
-
-export function browserPersist(context: Store, data: any, onSave: (data: any) => any) {
-	if (!!data) optional(() => restoreSnapshot(context, JSON.parse(data)));
-	['visibilitychange', 'pagehide', 'freeze'].forEach((type) => {
-		window.addEventListener(type, () => {
-			if (type === 'visibilitychange' && document.visibilityState === 'visible') return;
-			onSave(JSON.stringify(getSnapshot(context)));
-		}, {capture: true});
-	});
 }
