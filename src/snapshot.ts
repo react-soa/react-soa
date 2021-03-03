@@ -71,7 +71,6 @@ export function restoreServiceSnapshot<T>(service: { new(container?: Store): T }
 			keys.forEach(m => {
 				const {key} = m;
 				if (typeof data[key] !== 'undefined') {
-					console.log(data[key]);
 					if (validate && !validate({metadata: meta, key}))
 						return;
 					service[key] = data[key];
