@@ -9,7 +9,7 @@ export function useService<T>(target: { new(container?: Store): T }): T {
 }
 
 
-export function trackService<T>(target: { new(container?: Store): T }): T {
+export function useTrackService<T>(target: { new(container?: Store): T }): T {
 	useObserver([target]);
 	const container = useContext(SoaContext);
 	const meta = metadataOf(target.prototype);

@@ -109,7 +109,3 @@ export function observe(type: { new(context?: Store): any }) {
 		});
 	};
 }
-
-export function Bundle(target: any) {
-	return Observer([])(target)
-}

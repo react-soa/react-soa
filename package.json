@@ -1,6 +1,6 @@
 {
 	"name": "react-soa",
-	"version": "2.2.1",
+	"version": "2.2.2",
 	"description": "Service oriented programming pattern for building frontend applications.",
 	"main": "dist/index.js",
 	"types": "dist/index.d.ts",
@@ -19,10 +19,8 @@
 	},
 	"homepage": "https://github.com/react-soa/react-soa#readme",
 	"dependencies": {
-		"react": "^16.13.1"
-	},
-	"devDependencies": {
-		"@types/react": "^16.9.43",
-		"typescript": "^3.9.7"
+		"@types/react": "^17.0.14",
+		"react": "^17.0.2",
+		"typescript": "^4.3.5"
 	}
 }
