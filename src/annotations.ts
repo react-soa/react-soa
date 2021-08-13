@@ -18,38 +18,6 @@ export function debounced(ms: number, options?: Partial<DebounceOptions>) {
 	}
 }
 
-export function leading(ms: number) {
-	return function (target: any, key: string) {
-		const {debounceFunctions = []} = metadataOf(target);
-		metadata(target, {
-			debounceFunctions: [
-				...debounceFunctions,
-				{
-					key,
-					ms,
-					options: {leading: true, trailing: false},
-				}
-			],
-		});
-	}
-}
-
-export function trailing(ms: number) {
-	return function (target: any, key: string) {
-		const {debounceFunctions = []} = metadataOf(target);
-		metadata(target, {
-			debounceFunctions: [
-				...debounceFunctions,
-				{
-					key,
-					ms,
-					options: {leading: false, trailing: true},
-				}
-			],
-		});
-	}
-}
-
 export function throttled(ms: number, options?: Partial<ThrottleOptions>) {
 	return function (target: any, key: string) {
 		const {throttleFunctions = []} = metadataOf(target);
@@ -85,6 +53,19 @@ export function trigger(name: string) {
 		triggers[name].push(key);
 		metadata(target, {
 			triggers,
+		});
+	}
+}
+
+
+export function listen<K extends keyof WindowEventMap>(event: K) {
+	return function (target: any, key: string) {
+		const {listeners = []} = metadataOf(target);
+		metadata(target, {
+			listeners: [
+				...listeners,
+				{key, event}
+			],
 		});
 	}
 }

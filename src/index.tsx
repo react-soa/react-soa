@@ -80,7 +80,7 @@ export function createStore(context?: any): Store {
 }
 
 function registerService(container: Store, service: any) {
-	const {channel, triggers, hub, observables = [], timers = [], wired = [], throttleFunctions = [], debounceFunctions = []} = metadataOf(service);
+	const {channel, triggers, hub, listeners = [], observables = [], timers = [], wired = [], throttleFunctions = [], debounceFunctions = []} = metadataOf(service);
 	Object.defineProperty(service, '__context__', {
 		value: container,
 		configurable: false,
@@ -101,6 +101,9 @@ function registerService(container: Store, service: any) {
 			enumerable: true,
 			value: func,
 		});
+	});
+	listeners.forEach((data) => {
+		window.addEventListener(data.event, service[data.key], false);
 	});
 	debounceFunctions.forEach((data) => {
 		const {key, options, ms} = data;

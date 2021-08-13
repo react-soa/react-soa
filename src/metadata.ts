@@ -16,6 +16,7 @@ export type Metadata = Partial<{
 	observers: { [key: number]: string };
 	triggers: { [key: string]: string[] };
 	observables: string[];
+	listeners: {key: string; event: keyof WindowEventMap}[];
 	wired: string[];
 	debounceFunctions: { key: string, ms: number; options?: Partial<DebounceOptions> }[];
 	throttleFunctions: { key: string, ms: number; options?: Partial<ThrottleOptions> }[];

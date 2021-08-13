@@ -8,14 +8,6 @@ export function useService<T>(target: { new(container?: Store): T }): T {
 	return container ? container.services[meta.id] : null;
 }
 
-
-export function useTrackService<T>(target: { new(container?: Store): T }): T {
-	useObserver([target]);
-	const container = useContext(SoaContext);
-	const meta = metadataOf(target.prototype);
-	return container ? container.services[meta.id] : null;
-}
-
 export function useObserver(types?: { new(container?: Store): any }[]) {
 	const container = useContext(SoaContext);
 	const updater = useState({});
